@@ -1,0 +1,9 @@
+aiosqlite==0.20.0
+async-timeout==4.0.3
+dnspython==2.6.1
+Hydrogram==0.1.4
+pyaes==1.6.1
+pymongo==4.7.2
+PySocks==1.7.1
+redis==5.0.4
+typing_extensions==4.11.0
