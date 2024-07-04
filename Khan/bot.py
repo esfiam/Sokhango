@@ -1,7 +1,7 @@
 from db.config import *
 from db.texts import *
 from db.Mongo import *
-from keyboard import pv_keyboard, stats_keyboard, group_panel, list_commands_page, clear_all_keys_page, group_help, sponser_button, back_help_group
+from keyboard import *
 from hydrogram import Client, filters
 from hydrogram.types import Message, CallbackQuery
 from hydrogram.enums import ChatMemberStatus, ChatType
@@ -304,10 +304,7 @@ async def click_button_group(bot:Client, CallBack:CallbackQuery):
                         
                         elif CallBack.data == 'group_help_button_status':
                             await CallBack.edit_message_text(group_help_status, reply_markup=back_help_group())
-                           
-                           
-                           
-                           
+                             
                     else:
                         if not r.get(f"{CallBack.message.chat.id}:{CallBack.message.from_user.id}:spam"):
                             await CallBack.answer(just_user_requested, show_alert=True)            
@@ -318,7 +315,12 @@ async def click_button_group(bot:Client, CallBack:CallbackQuery):
                         await CallBack.answer(you_are_not_admin, show_alert=True)            
                         r.setex(f"{CallBack.message.chat.id}:{CallBack.message.from_user.id}:spam", 5, "True") # set expire for antispam in redis
             else:
-                await CallBack.answer('بعدا مینویسم الان حوصله ندارم')
+                if CallBack.data == 'back_button_pv':
+                    await CallBack.edit_message_text(pv_start_text, reply_markup=pv_keyboard())
+                elif CallBack.data == 'pv_Help_Button':
+                    await CallBack.edit_message_text(help_pv, reply_markup=back_main_pv())
+                elif CallBack.data == 'pv_About_Button':
+                    await CallBack.edit_message_text(info_pv, reply_markup=back_main_pv())
 
 # ---------------------------- commands list command-------------------------------#
 async def list_commands(bot:Client, message:Message):

@@ -20,6 +20,16 @@ def pv_keyboard():
     )
     return keyboardـstart
 
+def back_main_pv():
+    keyboard = InlineKeyboardMarkup(
+        [
+            [
+                Button(back_button, callback_data='back_button_pv')
+            ]
+        ]
+    )
+    return keyboard
+
 def group_panel(chatID:int):
     status_on, status_off = 'روشن','خاموش'
     if r.get(f'{chatID}:status') == 'True':
