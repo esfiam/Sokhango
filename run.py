@@ -9,9 +9,11 @@ list_bots = [
 
 def RunAll(bot:str):
     if bot in AllBots():
+        original_dir = os.getcwd()
         KillAll(bot)
         os.chdir(bot)
         run = subprocess.run(['tmux', 'new-session', '-d', '-s', bot, 'python bot.py'])
+        os.chdir(original_dir)
         return f'{bot} start'
     return f'{bot} not found'
 
