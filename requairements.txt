@@ -1,5 +1,6 @@
 aiosqlite==0.20.0
 async-timeout==4.0.3
+click==8.1.7
 dnspython==2.6.1
 Hydrogram==0.1.4
 pyaes==1.6.1
