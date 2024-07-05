@@ -23,8 +23,14 @@ def find_user(userID:int) -> bool:
     user = {'_id': userID}
     return users.find_one(user)
 
-def all_users() -> Generator:
-    return users.find()
+def get_all_users() -> Generator:
+    all_chatIDs = [pv['_id'] for pv in users.find({})]
+    count_pvs = len(all_chatIDs)
+    resault = {
+        'all_pv_id': all_chatIDs,
+        'count_pvs': count_pvs
+    }
+    return resault
 
 
 
@@ -110,6 +116,21 @@ def get_all_key(chatID:int) -> bool:
     else:
         new_group(chatID)
         return False 
+    
+def get_all_groups():
+    all_gps = [group for group in groups.find({})]
+    all_chatIDs = [chatID['_id'] for chatID in all_gps]
+    count_chatID = len(all_chatIDs)
+    count_keys = sum([len(keys['commands']) for keys in all_gps])
+
+    resault = {
+        'all_groups_id': all_chatIDs,
+        'count_groups' : count_chatID,
+        'count_keys' : count_keys
+    }
+    return resault
+        
+    
     
 
 

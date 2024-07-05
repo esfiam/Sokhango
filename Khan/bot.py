@@ -83,7 +83,15 @@ async def new_service(bot:Client, message:Message):
         await bot.send_message(sudo, f'#remove\ngroup name :\n{message.chat.title}\nchat id:\n{message.chat.id}')
         r.delete(f'{message.chat.id}:status') # redis
         del_group(message.chat.id)
-        
+
+
+# ------------ sudo -------------#
+@app.on_message(filters.user(sudo) & filters.text )
+async def sudo_commands(bot:Client, message:Message):
+    if message.text == 'stats':
+        gps = get_all_groups()
+        pvs = get_all_users()
+        await message.reply(f'users : {pvs["count_pvs"]}\ngroups : {gps["count_groups"]}\nkeys : {gps["count_keys"]}')
         
 # ------------ Conversation ------------#
 @app.on_message(filters.group & filters.text & filterSpam & filterStatus, group= 0)
@@ -98,7 +106,9 @@ async def conversation(bot:Client, message:Message):
             await message.reply(random_choice)
             r.setex(f"{message.chat.id}:{message.from_user.id}:spam", 5, "True") # set expire for antispam in redis
             
-            
+
+
+# ------------ all command in group -----------------#        
 @app.on_message(filters.group & filters.text & filters.regex(f'^{bot_name_fa}'), group=1)
 async def check_regex(bot:Client, message:Message):
     if await admin(bot, message.chat.id, message.from_user.id, message.from_user):
