@@ -279,5 +279,5 @@ info_pv = f'''🎗 {bot_name_fa} یک ربات فان و‌ مخصوص گروه 
 Lang : Python
 Lib : Hydrogram
 DB : Redis & MongoDB
-Author : @Esfiam
+Author : @DeepPythonist
 '''
